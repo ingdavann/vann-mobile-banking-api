@@ -29,4 +29,7 @@ public class Account {
     @ManyToOne
     private AccountType accountType;
 
+    @ManyToOne
+    private User user;
+
 }
