@@ -34,6 +34,6 @@ public class User {
     private Boolean isDeleted;
     private Boolean isStudent;
 
-    @OneToMany
-    private List<Account> accounts;
+    @OneToMany(mappedBy = "user")
+    private List<UserAccount> accounts;
 }

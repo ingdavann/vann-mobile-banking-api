@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +30,7 @@ public class Account {
     @ManyToOne
     private AccountType accountType;
 
-    @ManyToOne
-    private User user;
+    @OneToMany(mappedBy = "account")
+    private List<UserAccount> userAccountList;
 
 }
