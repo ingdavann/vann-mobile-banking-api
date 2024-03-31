@@ -24,6 +24,9 @@ public class Account {
     @Column(unique = true, nullable = true, length = 100)
     private String actName;
 
+    @Column(nullable = false)
+    private BigDecimal balance;
+
     private BigDecimal transferLimit;
 
     // Account has a type
@@ -32,5 +35,11 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<UserAccount> userAccountList;
+
+    @OneToOne
+    private Card card;
+
+    private Boolean isHidden; // uses to hide account on mobile app
+
 
 }

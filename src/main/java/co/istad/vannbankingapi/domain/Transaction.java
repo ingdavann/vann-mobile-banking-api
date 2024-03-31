@@ -15,22 +15,28 @@ import java.time.LocalDateTime;
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Account sender;
+    private Account owner;
 
     @ManyToOne
-    private Account receiver;
+    private Account transferReceiver; // uses when transaction type is TRANSFER
+
+    private String paymentReceiver;
 
     private BigDecimal amount;
 
+    @Column(columnDefinition = "TEXT")
     private String remark;
 
-    private Boolean isPayment;
+    @Column(nullable = false, length = 30)
+    private String transactionType; // transfer and payment
+
+    private Boolean status; // Pending, Completed, Failed
 
     private LocalDateTime transactionAt;
-    private Boolean isDeleted;
+
 
 }
