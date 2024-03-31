@@ -1,6 +1,8 @@
 package co.istad.vannbankingapi.mapper;
 
+import co.istad.vannbankingapi.domain.AccountType;
 import co.istad.vannbankingapi.domain.User;
+import co.istad.vannbankingapi.features.accounttype.dto.AccountTypeResponse;
 import co.istad.vannbankingapi.features.user.dto.UserCreateRequest;
 import co.istad.vannbankingapi.features.user.dto.UserDetailResponse;
 import org.mapstruct.Mapper;
@@ -12,5 +14,6 @@ public interface UserMapper {
     User fromUserCreateRequest(UserCreateRequest userCreateRequest); //from dto to entity
 
     UserDetailResponse toUserDetailResponse(User user);
+
 
 }
