@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,8 +11,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "authorities")
-
 public class Authority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,3 +23,4 @@ public class Authority {
     private List<Role> roles;
 
 }
+

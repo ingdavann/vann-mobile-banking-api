@@ -16,12 +16,12 @@ public record UserCreateRequest(
 
         @NotBlank
         String password,
-        @NotNull
+        @NotBlank
         String confirmPassword,
 
         @NotBlank
         @Size(max = 20)
-        String nationalId,
+        String nationalCardId,
 
         @NotBlank
         @Size(max = 40)
@@ -31,8 +31,7 @@ public record UserCreateRequest(
         @Size(max = 6)
         String gender,
 
-        @NotBlank
-        @Size(max = 20)
+        @NotNull
         LocalDate dob,
 
         @Size(max = 20)
