@@ -29,8 +29,9 @@ public class AccountTypeServiceImpl implements AccountTypeService{
                     HttpStatus.NOT_FOUND,
                     "Account type has been not found"
             );
-        }
+        } 
         AccountType accountType = accountTypeRepository.findByAlias(lowerCaseAlias);
         return accountTypeMapper.toAccountTypeResponse(accountType);
     }
+
 }
