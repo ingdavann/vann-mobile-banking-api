@@ -3,10 +3,8 @@ package co.istad.vannbankingapi.features.media;
 import co.istad.vannbankingapi.features.media.dto.MediaResponse;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.bridge.MessageUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,5 +22,15 @@ public class MediaController {
     @PostMapping("/upload-multiple")
     List<MediaResponse> uploadMultiple(@RequestPart List<MultipartFile> files){
         return mediaService.uploadMultiple(files, "VANN-BANKING");
+    }
+
+    @GetMapping
+    List<MediaResponse> findAllListMedia(){
+        return mediaService.getAllListMedia("VANN-BANKING");
+    }
+
+    @GetMapping("/download/{name}")
+    ResponseEntity downloadByName(@PathVariable String name) {
+        return mediaService.downloadMediaByName(name , "VANN-BANKING");
     }
 }
