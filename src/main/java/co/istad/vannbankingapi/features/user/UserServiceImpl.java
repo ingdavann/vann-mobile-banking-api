@@ -141,5 +141,16 @@ public class UserServiceImpl implements UserService{
         return users.map(userMapper::toUserResponse);
     }
 
-
+    @Override
+    public String updateProfileUser(String uuid, String folderName) {
+        User user = userRepository.findByUuid(uuid).orElseThrow(
+                ()-> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User has not been found!"
+                        )
+        );
+        user.setProfileImage(folderName);
+        userRepository.save(user);
+        return null;
+    }
 }

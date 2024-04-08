@@ -24,6 +24,9 @@ public class Account {
     @Column(unique = true, nullable = true, length = 100)
     private String actName;
 
+    @Column(length = 100)
+    private String alias;
+
     @Column(nullable = false)
     private BigDecimal balance;
 

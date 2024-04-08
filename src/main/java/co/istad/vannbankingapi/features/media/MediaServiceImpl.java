@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -97,7 +96,6 @@ public class MediaServiceImpl implements MediaService{
                     throw new RuntimeException("Error processing file: " + filePath, e);
                 }
             });
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -105,7 +103,7 @@ public class MediaServiceImpl implements MediaService{
     }
 
     @Override
-    public ResponseEntity downloadMediaByName(String mediaName, String folderName) {
+    public ResponseEntity<?> downloadMediaByName(String mediaName, String folderName) {
         Path path = Paths.get(serverPath + folderName + "\\" + mediaName);
         try {
             Resource resource = new UrlResource(path.toUri());

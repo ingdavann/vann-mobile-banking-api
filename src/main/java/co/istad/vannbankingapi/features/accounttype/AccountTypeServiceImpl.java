@@ -20,17 +20,15 @@ public class AccountTypeServiceImpl implements AccountTypeService{
         return accountTypes.stream()
                 .map(accountType -> accountTypeMapper).toList();
     }
-
     @Override
     public AccountTypeResponse findByAlias(String alias) {
-        String lowerCaseAlias = alias.toLowerCase();
-        if (!accountTypeRepository.existsByAlias(lowerCaseAlias)){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Account type has been not found"
-            );
-        } 
-        AccountType accountType = accountTypeRepository.findByAlias(lowerCaseAlias);
+        AccountType accountType = accountTypeRepository.findByAlias(alias)
+                .orElseThrow(()->
+                            new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "Invalid account type"
+                            )
+                        );
         return accountTypeMapper.toAccountTypeResponse(accountType);
     }
 

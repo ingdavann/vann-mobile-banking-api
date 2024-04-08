@@ -13,5 +13,5 @@ public interface MediaService {
 
     List<MediaResponse> getAllListMedia(String folderName);
 
-    ResponseEntity downloadMediaByName(String mediaName, String folderName);
+    ResponseEntity<?> downloadMediaByName(String mediaName, String folderName);
 }

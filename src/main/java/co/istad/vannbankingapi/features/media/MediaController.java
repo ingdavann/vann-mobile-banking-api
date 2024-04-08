@@ -30,7 +30,7 @@ public class MediaController {
     }
 
     @GetMapping("/download/{name}")
-    ResponseEntity downloadByName(@PathVariable String name) {
+    ResponseEntity<?> downloadByName(@PathVariable String name) {
         return mediaService.downloadMediaByName(name , "VANN-BANKING");
     }
 }

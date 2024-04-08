@@ -1,6 +1,8 @@
 package co.istad.vannbankingapi.util;
 
+import co.istad.vannbankingapi.domain.AccountType;
 import co.istad.vannbankingapi.domain.Role;
+import co.istad.vannbankingapi.features.accounttype.AccountTypeRepository;
 import co.istad.vannbankingapi.features.user.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import java.util.List;
 public class DataInit {
 
     private final RoleRepository roleRepository;
+    private final AccountTypeRepository accountTypeRepository;
 
     @PostConstruct
     void init() {
@@ -37,5 +40,32 @@ public class DataInit {
         }
 
     }
+
+    @PostConstruct
+    void initAccountType() {
+        if (accountTypeRepository.count() < 1) {
+            AccountType savingActType = new AccountType();
+            savingActType.setName("Saving Account");
+            savingActType.setAlias("saving-account");
+            savingActType.setIsDeleted(false);
+            savingActType.setDescription("A savings account is a deposit account held at a financial institution that provides security for your principal and a modest interest rate.");
+            accountTypeRepository.save(savingActType);
+
+            AccountType payrollActType = new AccountType();
+            payrollActType.setName("Payroll Account");
+            payrollActType.setAlias("payroll-account");
+            payrollActType.setIsDeleted(false);
+            payrollActType.setDescription("A payroll account is a type of account used specifically for employee compensation, whether it's to do with salary, wage, or bonuses.");
+            accountTypeRepository.save(payrollActType);
+
+            AccountType cardActType = new AccountType();
+            cardActType.setName("Card Account");
+            cardActType.setAlias("card-account");
+            cardActType.setIsDeleted(false);
+            cardActType.setDescription("Card Account means the Cardholder's Account(s) with the Bank in respect of which the Card is issued, on which withdrawals/payments shall be debited and lodgements credited when effected by the Cardholder.");
+            accountTypeRepository.save(cardActType);
+        }
+    }
+
 }
 

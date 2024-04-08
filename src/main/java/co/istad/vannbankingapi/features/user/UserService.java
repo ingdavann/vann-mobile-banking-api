@@ -21,4 +21,6 @@ public interface UserService {
 
     Page<UserResponse> findList(int page, int limit);
 
+    String updateProfileUser(String uuid, String folderName);
+
 }
