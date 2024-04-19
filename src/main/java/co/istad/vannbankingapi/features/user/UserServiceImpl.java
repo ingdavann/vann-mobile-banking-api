@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void createNewUser(UserCreateRequest userCreateRequest) {
         // Check phone number if exist
@@ -65,10 +67,14 @@ public class UserServiceImpl implements UserService{
         //DTO pattern (mapstruct ft. lombok)
         User user = userMapper.fromUserCreateRequest(userCreateRequest);
         user.setUuid(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setProfileImage("me.png");
         user.setCreatedAt(LocalDateTime.now());
         user.setIsBlocked(false);
         user.setIsDeleted(false);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
 
         // set default user role
         List<Role> roles = new ArrayList<>();
@@ -79,6 +85,19 @@ public class UserServiceImpl implements UserService{
                                         "Role has been not found!"
                                 ));
         roles.add(userRole);
+
+        // set dynamic roles when create user
+        userCreateRequest.roles()
+                .forEach(r -> {
+                    Role role1 = roleRepository.findByName(r.name())
+                            .orElseThrow(()-> new ResponseStatusException(
+                                    HttpStatus.NOT_FOUND,
+                                    "User role does not exist!"
+                            ));
+                    roles.add(role1);
+                });
+
+
         user.setRoles(roles);
 
         userRepository.save(user);
