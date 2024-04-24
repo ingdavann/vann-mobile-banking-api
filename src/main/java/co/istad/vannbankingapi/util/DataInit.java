@@ -1,6 +1,7 @@
 package co.istad.vannbankingapi.util;
 
 import co.istad.vannbankingapi.domain.AccountType;
+import co.istad.vannbankingapi.domain.Authority;
 import co.istad.vannbankingapi.domain.Role;
 import co.istad.vannbankingapi.features.accounttype.AccountTypeRepository;
 import co.istad.vannbankingapi.features.user.RoleRepository;
@@ -13,30 +14,73 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class DataInit {
-
     private final RoleRepository roleRepository;
     private final AccountTypeRepository accountTypeRepository;
+    private final AccountTypeRepository authorityRepository;
 
     @PostConstruct
     void init() {
 
         // Auto generate role (USER, CUSTOMER, STAFF, ADMIN)
         if (roleRepository.count() < 1) {
+
+            // user
+            Authority userRead = new Authority();
+            userRead.setName("user:read");
+            Authority userWrite = new Authority();
+            userWrite.setName("user:write");
+            // transaction
+            Authority transactionRead = new Authority();
+            transactionRead.setName("transaction:read");
+            Authority transactionWrite = new Authority();
+            transactionWrite.setName("transaction:write");
+            // account
+            Authority accountRead = new Authority();
+            accountRead.setName("account:read");
+            Authority accountWrite = new Authority();
+            accountWrite.setName("account:write");
+            // accountType
+            Authority accountTypeRead = new Authority();
+            accountTypeRead.setName("accountType:read");
+            Authority accountTypeWrite = new Authority();
+            accountTypeWrite.setName("accountType:write");
+
             Role user = new Role();
             user.setName("USER");
+            user.setAuthorities(List.of(
+                    userRead, transactionRead,
+                    accountRead, accountTypeRead
+            ));
 
             Role customer = new Role();
             customer.setName("CUSTOMER");
+            customer.setAuthorities(List.of(
+                    userWrite, transactionWrite,
+                    accountWrite
+            ));
 
             Role staff = new Role();
             staff.setName("STAFF");
+            staff.setAuthorities(List.of(
+                    accountTypeWrite
+            ));
+
 
             Role admin = new Role();
             admin.setName("ADMIN");
+            admin.setAuthorities(List.of(
+                    userWrite, accountWrite,
+                    accountTypeWrite
+            ));
 
             roleRepository.saveAll(
                     List.of(user, customer, staff, admin)
             );
+        }
+
+        if (authorityRepository.count() > 1){
+
+
         }
 
     }
