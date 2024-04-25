@@ -77,12 +77,6 @@ public class DataInit {
                     List.of(user, customer, staff, admin)
             );
         }
-
-        if (authorityRepository.count() > 1){
-
-
-        }
-
     }
 
     @PostConstruct
