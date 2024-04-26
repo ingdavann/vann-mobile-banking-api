@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService{
             scope = auth.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
-//                    .filter(authority -> !authority.startsWith("ROLE_"))
+                    .filter(authority -> !authority.startsWith("ROLE_"))
                     .collect(Collectors.joining(" "));
         }
 
@@ -85,6 +85,8 @@ public class TokenServiceImpl implements TokenService{
                     .filter(authority -> !authority.startsWith("ROLE_"))
                     .collect(Collectors.joining(" "));
         }
+
+        log.info("Scope: {}", scope);
 
         Instant now = Instant.now();
 

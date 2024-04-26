@@ -19,7 +19,6 @@ public class CustomUserDetails implements UserDetails {
     private User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         user.getRoles().forEach(role -> {
@@ -30,6 +29,7 @@ public class CustomUserDetails implements UserDetails {
         });
 
         return authorities;
+
     }
 
     @Override
